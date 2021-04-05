@@ -14,13 +14,16 @@ This app was built with the purpose of managing employee data within the company
 
 Currently, the app has the following features: 
 
-3. Home page
+1. Home page
+
     <img src="https://puu.sh/HvEZA/5441f7302e.png" alt="home page" />
 
-5. Login page
+2. Login page
+
     <img src="https://puu.sh/HvEZJ/0d1473e690.png" alt="login page" />
 
-6. Register page
+3. Register page
+
     
     <img src="https://puu.sh/HvF00/96fc6620f8.png" alt="register page" />
     

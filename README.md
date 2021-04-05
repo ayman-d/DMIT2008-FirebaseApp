@@ -31,7 +31,7 @@ Currently, the app has the following features:
 
 ### Purpose
 
-This app is made for the purpose of managing employee details, financial data, and keeping a live record of each employee through the company's portal.
+This app is made for the purpose of managing employee details.
 
 ---
 
@@ -40,13 +40,18 @@ This app is made for the purpose of managing employee details, financial data, a
 The repo does not include the node_modules, please run `npm install` in the main project 
 directory if you wish to clone it and run it locally
 
-The package.json is already configured with:
-- `npm run server` command to run the project in development
-- `npm start` to run the application in production
+The repo does not include the firebase configuration files, to do your own configuration 
+please do the following:
+1. set up a new firebase application
+2. navigate to project settings and tab over to "Config"
+3. paste the config information in your project under src/firebase/firebaseConfig.js file
+4. run all of the firebase steps to initialize a project and provide appropriate config
+5. make sure that you choose "build" as your public build folder and specify that your app is SPA
 
-This project also requires the
-[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) extension. 
-If you use it on VS Code, make sure to turn on "watch sass" option when editing the scss style sheets
+
+The package.json is already configured with:
+- `npm start` to run the application in production
+- `npm run build` to build your project into the build folder which firebase reads from
 
 ---
 
@@ -56,18 +61,19 @@ If you use it on VS Code, make sure to turn on "watch sass" option when editing 
 
 | Package                        | Purpose                                                       |
 |--------------------------------|---------------------------------------------------------------|
-| express                        | Node JS framework to run server side code                     |
-| cors                           | Allows cross server communication                             |
-| ejs                            | JS view template renderer                                     |
-| cookie-session                 | To maintain user's session while logged in                    |
-| uuid                           | To create long string id numbers                              |
+| firebase                       | backend as a service from google                              |
+| react-router-dom               | enables routing in react components                           |
 
 
 - Development
 
 | Package                        | Purpose                                                       |
 |--------------------------------|---------------------------------------------------------------|
-| Nodemon                        | Package to automatically restart server upon changes          |
+| @svgr/cli                      | convert svg files to reusable components                      |
+| svgo                           | convert svg files to reusable components                      |
+| node-sass                      | enable sass styling for components                            |
+| styled-components              | in-component styling                                          |
+
 
 ---
 

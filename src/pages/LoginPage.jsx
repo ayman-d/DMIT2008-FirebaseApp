@@ -1,25 +1,45 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom'
 import firebaseApp from './../firebase/firebaseConfig'
 
 import FormInput from '../components/forms/FormInput'
 import Button from '../components/buttons/Button'
 
+import AuthContext from '../auth/AuthContext'
 
 const LoginPage = () => {
 
-    const handleLogin = (e) => {
-        firebaseApp.auth().signInWithEmailAndPassword("aymand1982@gmail.com", "sawamowa")
-            .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                console.log(userCredential.user);
-                // ...
+    const auth = useContext(AuthContext);
+    const [user, setUser] = useState({ email: "", password: "" })
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        document.querySelector(".first").querySelector("input").focus();
+    }, [])
+
+    const handleClick = (e) => {
+        firebaseApp
+            .auth()
+            .signInWithEmailAndPassword(user.email, user.password)
+            .catch(error => {
+                console.log(error.code, error.message);
+                setError(error.code)
+                document.querySelector(".error").classList.remove("hide");
+                // setIsValid(false);
             })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-            });
+    }
+
+    const handleFocus = (e) => {
+        document.querySelector(".error").classList.add("hide");
+    }
+
+    const handleChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value.trim() })
+    }
+
+    if (auth.authenticated) {
+        return (<Redirect to="/dashboard" />)
     }
 
     return (
@@ -29,9 +49,10 @@ const LoginPage = () => {
                 <p>No credit card required</p>
             </header>
 
-            <FormInput inputType="email" label="valid email address" />
-            <FormInput inputType="password" label="strong password" />
-            <Button label="Login" uiStyle="login" onClick={handleLogin} />
+            <FormInput className="first" inputType="email" label="valid email address" name="email" onChange={handleChange} onFocus={handleFocus} />
+            <FormInput inputType="password" label="strong password" name="password" onChange={handleChange} onFocus={handleFocus} />
+            <p className="error hide">{error}</p>
+            <Button onClick={handleClick} label="Login" uiStyle="login" />
 
         </LoginPageStyles>
     );
@@ -43,7 +64,6 @@ export default LoginPage;
 
 const LoginPageStyles = styled.div`
   max-width: 480px;
-
   margin: 6rem auto 0;
 
   header {
@@ -59,5 +79,15 @@ const LoginPageStyles = styled.div`
   // can directly style a styled component that's imported
   button {
       margin-top: 10px;
+  }
+
+  .error {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+  }
+
+  .hide {
+      display: none;
   }
 `;

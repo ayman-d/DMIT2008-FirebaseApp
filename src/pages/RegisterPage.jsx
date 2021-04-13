@@ -1,11 +1,56 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
+import firebaseApp from "../firebase/firebaseConfig";
+import { useHistory } from "react-router-dom";
 
 import FormInput from '../components/forms/FormInput'
 import Button from '../components/buttons/Button'
 
 
 const RegisterPage = () => {
+
+    const [newUser, setNewUser] = useState({ name: "", email: "", password: "" });
+    const [error, setError] = useState("")
+    const history = useHistory();
+
+    useEffect(() => {
+        document.querySelector(".first").querySelector("input").focus();
+    }, [])
+
+    const handleChange = (e) => {
+        setNewUser({ ...newUser, [e.target.name]: e.target.value.trim() })
+    }
+
+    const handleClick = (e) => {
+
+        if (newUser.name === "") {
+
+            setError("username is required");
+            document.querySelector(".error").classList.remove("hide");
+        } else {
+            firebaseApp.auth()
+                .createUserWithEmailAndPassword(newUser.email, newUser.password)
+                .then(userCredentials => {
+                    userCredentials.user.updateProfile({
+                        displayName: newUser.name
+                    });
+                })
+                .then(() => {
+                    firebaseApp.auth().signOut();
+                    history.push("/login")
+                })
+                .catch(error => {
+                    console.log(error.code, error.message);
+                    setError(error.code)
+                    document.querySelector(".error").classList.remove("hide");
+                })
+        }
+    }
+
+    const handleFocus = (e) => {
+        document.querySelector(".error").classList.add("hide");
+    }
+
     return (
         <RegisterPageStyles>
             <header>
@@ -13,10 +58,11 @@ const RegisterPage = () => {
                 <p>No credit card required</p>
             </header>
 
-            <FormInput inputType="text" label="name on the account" />
-            <FormInput inputType="email" label="valid email address" />
-            <FormInput inputType="password" label="strong password" />
-            <Button /* className="jimo" */ label="Register" uiStyle="signup" />
+            <FormInput className="first" inputType="text" name="name" label="name on the account" onChange={handleChange} onFocus={handleFocus} />
+            <FormInput inputType="email" name="email" label="valid email address" onChange={handleChange} onFocus={handleFocus} />
+            <FormInput inputType="password" name="password" label="strong password" onChange={handleChange} onFocus={handleFocus} />
+            <p className="error hide">{error}</p>
+            <Button onClick={handleClick} label="Register" uiStyle="signup" />
 
         </RegisterPageStyles>
     );
@@ -49,5 +95,15 @@ const RegisterPageStyles = styled.div`
   // can also add class which will override other things
   .jimo {
       background-color: grey;
+  }
+
+  .error {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+  }
+
+  .hide {
+      display: none;
   }
 `;

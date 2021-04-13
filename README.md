@@ -12,21 +12,38 @@
 
 This app was built with the purpose of managing employee data within the company with regards to their details and statuses.
 
-Currently, the app has the following features: 
+Currently, the app has the following features:
 
 1. Home page
 
-    <img src="https://puu.sh/HvEZA/5441f7302e.png" alt="home page" />
+<img src="https://puu.sh/HvEZA/5441f7302e.png" alt="home page" />
+
+--
 
 2. Login page
 
-    <img src="https://puu.sh/HvEZJ/0d1473e690.png" alt="login page" />
+<img src="https://puu.sh/HvEZJ/0d1473e690.png" alt="login page" />
+
+--
 
 3. Register page
 
-    
-    <img src="https://puu.sh/HvF00/96fc6620f8.png" alt="register page" />
-    
+<img src="https://puu.sh/HvF00/96fc6620f8.png" alt="register page" />
+
+--
+
+4. Dashboard page
+
+<img src="https://puu.sh/HxPhU/64dd93921f.png" alt="register page" />
+
+--
+
+5. Redirection
+
+- On successful login, user will be redirected to the dashboard page
+- On logout, user will be redirected to the home page
+- On successful register, user will be redirected to the login page
+
 ---
 
 ### Purpose
@@ -37,19 +54,20 @@ This app is made for the purpose of managing employee details.
 
 ### Running the project
 
-The repo does not include the node_modules, please run `npm install` in the main project 
+The repo does not include the node_modules, please run `npm install` in the main project
 directory if you wish to clone it and run it locally
 
-The repo does not include the firebase configuration files, to do your own configuration 
+The repo does not include the firebase configuration files, to do your own configuration
 please do the following:
+
 1. set up a new firebase application
 2. navigate to project settings and tab over to "Config"
 3. paste the config information in your project under src/firebase/firebaseConfig.js file
 4. run all of the firebase steps to initialize a project and provide appropriate config
 5. make sure that you choose "build" as your public build folder and specify that your app is SPA
 
-
 The package.json is already configured with:
+
 - `npm start` to run the application in production
 - `npm run build` to build your project into the build folder which firebase reads from
 
@@ -59,21 +77,19 @@ The package.json is already configured with:
 
 - Production
 
-| Package                        | Purpose                                                       |
-|--------------------------------|---------------------------------------------------------------|
-| firebase                       | backend as a service from google                              |
-| react-router-dom               | enables routing in react components                           |
-
+| Package          | Purpose                             |
+| ---------------- | ----------------------------------- |
+| firebase         | backend as a service from google    |
+| react-router-dom | enables routing in react components |
 
 - Development
 
-| Package                        | Purpose                                                       |
-|--------------------------------|---------------------------------------------------------------|
-| @svgr/cli                      | convert svg files to reusable components                      |
-| svgo                           | convert svg files to reusable components                      |
-| node-sass                      | enable sass styling for components                            |
-| styled-components              | in-component styling                                          |
-
+| Package           | Purpose                                  |
+| ----------------- | ---------------------------------------- |
+| @svgr/cli         | convert svg files to reusable components |
+| svgo              | convert svg files to reusable components |
+| node-sass         | enable sass styling for components       |
+| styled-components | in-component styling                     |
 
 ---
 

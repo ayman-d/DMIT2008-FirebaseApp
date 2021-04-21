@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../components/icon/Logo'
+import Logo from '../components/icons/Logo'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 

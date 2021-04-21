@@ -21,7 +21,9 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
-          <Route path="/dashboard" component={DashBoard} />
+          <Route path="/dashboard" component={DashBoard}>
+
+          </Route>
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Router>

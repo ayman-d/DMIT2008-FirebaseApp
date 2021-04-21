@@ -1,12 +1,20 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect, useRouteMatch, Route, Switch } from 'react-router-dom';
 
+import ViewAll from "./dashboard/panels/ViewAll";
+import BasePanel from "./dashboard/panels/BasePanel";
+import CreatePanel from "./dashboard/panels/CreatePanel";
+import DeletePanel from "./dashboard/panels/DeletePanel";
+import EditPanel from "./dashboard/panels/EditPanel";
 import AuthContext from "../auth/AuthContext"
 
 const DashBoard = (props) => {
 
     const auth = useContext(AuthContext);
+    const { path, url } = useRouteMatch();
+
+
 
     if (auth.authenticated === false) {
         return (<Redirect to="/login" />)
@@ -21,15 +29,19 @@ const DashBoard = (props) => {
                 </header>
 
                 <ul>
-                    <li>view all</li>
-                    <li>add new employee</li>
-                    <li>edit an employee</li>
-                    <li>delete an employee</li>
-
+                    <li><Link to={`${url}`}>View All Content</Link></li>
+                    <li><Link to={`${url}/create`}>Create Content</Link></li>
+                    <li><Link to={`${url}/edit`}>Edit Content</Link></li>
+                    <li><Link to={`${url}/delete`}>Delete Content</Link></li>
                 </ul>
             </SideBar>
             <Panels>
-
+                <Switch>
+                    <Route exact Bpath={`${path}`} component={ViewAll} />
+                    <Route path={`${path}/create`} component={CreatePanel} />
+                    <Route path={`${path}/edit`} component={EditPanel} />
+                    <Route path={`${path}/delete`} component={DeletePanel} />
+                </Switch>
             </Panels>
 
         </DashBoardStyles>

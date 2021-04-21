@@ -38,7 +38,13 @@ Currently, the app has the following features:
 
 --
 
-5. Redirection
+5. Employee Add/View
+
+<img src="https://puu.sh/HA9xR/1978838482.png" alt="employee management page" />
+
+--
+
+6. Redirection
 
 - On successful login, user will be redirected to the dashboard page
 - On logout, user will be redirected to the home page

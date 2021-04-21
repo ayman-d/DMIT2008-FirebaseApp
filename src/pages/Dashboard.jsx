@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Link, Redirect, useRouteMatch, Route, Switch } from 'react-router-dom';
 
 import ViewAll from "./dashboard/panels/ViewAll";
-import BasePanel from "./dashboard/panels/BasePanel";
 import CreatePanel from "./dashboard/panels/CreatePanel";
 import DeletePanel from "./dashboard/panels/DeletePanel";
 import EditPanel from "./dashboard/panels/EditPanel";
@@ -16,7 +15,7 @@ const DashBoard = (props) => {
 
 
 
-    if (auth.authenticated === false) {
+    if (!auth.isUser) {
         return (<Redirect to="/login" />)
     }
 

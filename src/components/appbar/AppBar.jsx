@@ -1,40 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
-import firebaseApp from "../../firebase/firebaseConfig";
-import AuthContext from "../../auth/AuthContext";
+import { Link } from "react-router-dom";
 
 const AppBar = () => {
 
-    const auth = useContext(AuthContext);
-    const history = useHistory();
-
-    const handleLogout = (e) => {
-        firebaseApp.auth().signOut();
-        history.push("/")
-    }
-
-    if (auth.authenticated === true) {
-        return (
-            <AppBarStyles>
-                <ul>
-                    <li><Link to="">Home</Link></li>
-                    <li><Link to="/dashboard">Dashboard</Link></li>
-                    |
-                    <li>logged in as<span>{auth.name !== null ? auth.name : auth.email}</span><button onClick={handleLogout}>Logout</button></li>
-                </ul>
-            </AppBarStyles>
-        )
-    } else {
-        return (
-            <AppBarStyles>
-                <ul>
-                    <li><Link to="">Home</Link></li>
-                    <li><Link to="/dashboard">Dashboard</Link></li>
-                </ul>
-            </AppBarStyles>
-        );
-    }
+    return (
+        <AppBarStyles>
+            <ul>
+                <li><Link to="">Home</Link></li>
+                <li><Link to="/dashboard">Dashboard</Link></li>
+            </ul>
+        </AppBarStyles>
+    );
 }
 
 export default AppBar;

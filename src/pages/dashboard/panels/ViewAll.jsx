@@ -14,14 +14,14 @@ const ViewAll = (props) => {
     fetchEmployees();
   }, [])
 
-  const fetchEmployees = async () => {
+  const fetchEmployees = () => {
     let docStore = [];
-    const employeesRef = firebaseApp.firestore().collection(firebaseApp.auth().currentUser.uid).doc('hr').collection('employees');
+    const userId = firebaseApp.auth().currentUser.uid;
+    const employeesRef = firebaseApp.firestore().collection(userId).doc('hr').collection('employees');
 
     employeesRef.onSnapshot(snapshot => {
       docStore = snapshot.docs.map(doc => doc.data());
       setEmployees(docStore);
-      console.log(employees);
     })
   }
 

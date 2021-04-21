@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import firebaseApp from "../firebase/firebaseConfig";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import FormInput from '../components/forms/FormInput'
 import Button from '../components/buttons/Button'
@@ -10,12 +10,8 @@ import Button from '../components/buttons/Button'
 const RegisterPage = () => {
 
     const [newUser, setNewUser] = useState({ name: "", email: "", password: "" });
+    const [registered, setRegistered] = useState(false)
     const [error, setError] = useState("")
-    const history = useHistory();
-
-    useEffect(() => {
-        document.querySelector(".first").querySelector("input").focus();
-    }, [])
 
     const handleChange = (e) => {
         setNewUser({ ...newUser, [e.target.name]: e.target.value.trim() })
@@ -37,7 +33,7 @@ const RegisterPage = () => {
                 })
                 .then(() => {
                     firebaseApp.auth().signOut();
-                    history.push("/login")
+                    setRegistered(true)
                 })
                 .catch(error => {
                     console.log(error.code, error.message);
@@ -51,21 +47,25 @@ const RegisterPage = () => {
         document.querySelector(".error").classList.add("hide");
     }
 
-    return (
-        <RegisterPageStyles>
-            <header>
-                <h1>Unlimited Trial Account</h1>
-                <p>No credit card required</p>
-            </header>
+    if (registered) {
+        return (<Redirect to="/login" />)
+    } else {
+        return (
+            <RegisterPageStyles>
+                <header>
+                    <h1>Unlimited Trial Account</h1>
+                    <p>No credit card required</p>
+                </header>
 
-            <FormInput className="first" inputType="text" name="name" label="name on the account" onChange={handleChange} onFocus={handleFocus} />
-            <FormInput inputType="email" name="email" label="valid email address" onChange={handleChange} onFocus={handleFocus} />
-            <FormInput inputType="password" name="password" label="strong password" onChange={handleChange} onFocus={handleFocus} />
-            <p className="error hide">{error}</p>
-            <Button onClick={handleClick} label="Register" uiStyle="signup" />
+                <FormInput className="first" inputType="text" name="name" label="name on the account" onChange={handleChange} onFocus={handleFocus} />
+                <FormInput inputType="email" name="email" label="valid email address" onChange={handleChange} onFocus={handleFocus} />
+                <FormInput inputType="password" name="password" label="strong password" onChange={handleChange} onFocus={handleFocus} />
+                <p className="error hide">{error}</p>
+                <Button onClick={handleClick} label="Register" uiStyle="signup" />
 
-        </RegisterPageStyles>
-    );
+            </RegisterPageStyles>
+        );
+    }
 }
 
 export default RegisterPage;

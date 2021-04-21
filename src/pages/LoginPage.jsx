@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom'
 import firebaseApp from './../firebase/firebaseConfig'
@@ -12,21 +12,21 @@ const LoginPage = () => {
 
     const auth = useContext(AuthContext);
     const [user, setUser] = useState({ email: "", password: "" })
+    const [isValid, setIsValid] = useState(false)
     const [error, setError] = useState("");
-
-    useEffect(() => {
-        document.querySelector(".first").querySelector("input").focus();
-    }, [])
 
     const handleClick = (e) => {
         firebaseApp
             .auth()
             .signInWithEmailAndPassword(user.email, user.password)
+            .then(userCredentials => {
+                auth.isUser = true;
+                setIsValid(true)
+            })
             .catch(error => {
                 console.log(error.code, error.message);
                 setError(error.code)
                 document.querySelector(".error").classList.remove("hide");
-                // setIsValid(false);
             })
     }
 
@@ -38,7 +38,7 @@ const LoginPage = () => {
         setUser({ ...user, [e.target.name]: e.target.value.trim() })
     }
 
-    if (auth.authenticated) {
+    if (isValid) {
         return (<Redirect to="/dashboard" />)
     }
 
